@@ -17,13 +17,10 @@
 		<script type="application/javascript", src="js/KContext.js"></script>
 		
 		<script>
-			
-			var kanvas = Kanvas.create(document.body, {baseFPS:70});
 		
-			var canvas = kanvas.canvas;
-			kanvas.stage.color = "#000";
-			var Chain = Kanvas.class({
-				name: 'Chain Object',
+			var canvas = Kanvas.makeCanvas(document.body);
+			// kanvas.stage.color = "red";
+			var Chain = Kanvas.Class('Chain', {
 				init: function(sys,ii){
 					this.dynamic = false;
 					this.numBros = sys.numChains;
@@ -56,13 +53,11 @@
 				draw: function(context){
 					context.fillStyle = (this.rolled)?("#f72"):(this.color);
 					context.fillRect(-2,-5,this.length+4,10);
-					
 				}
 				
 			});
 			
-			var Claw = Kanvas.class({
-				name: 'Claw Object',
+			var Claw = Kanvas.Class('Claw', {
 				init: function(){
 					Chain.prototype.init.apply(this,this.init.arguments);
 					this.every = Chain.prototype.every.bind(this);
@@ -99,6 +94,10 @@
 					context.rotate(Math.PI/8);
 					context.fillArc(7,0,2, 0, Math.PI*2, true); 
 					context.fillRect(0,-1, 7,3);
+					context.translate(5,0)
+					context.rotate(Math.PI/16);
+					context.fillArc(4,0,1, 0, Math.PI*2, true); 
+					context.fillRect(0,0, 4,2);
 					context.restore()
 					
 					
@@ -120,8 +119,7 @@
 				
 			});
 			
-			var System = Kanvas.class({
-				name: 'System Object',
+			var System = Kanvas.Class('System', {
 				init: function(xx,yy){
 					this.x = xx;
 					this.y = yy;
@@ -160,15 +158,27 @@
 			
 			//while(kanvas.stage.children.length < 80){
 			//	kanvas.stage.addChild(new System(document.width*Math.random(), document.height*Math.random()));
+			canvas.setStage(new Kanvas.StageClass());
+			canvas.startEvents();
+
+			setInterval(function(){
+				canvas.width = canvas.width;
+				canvas.stage.run();
+				// car.x += 10
+			}, 1000/120);
 
 			var numSys= 50;
 			var allSys = [];
 			for(var nn = 0; nn < numSys; nn+=1){
 				var sys1 = new System(100 + Math.random()*(-200+canvas.height), 100 + Math.random()*(-200+canvas.height));
 				allSys.push(sys1);
+				canvas.stage.addChild(sys1);
 			}
 			
 			
+			
+			
+
 			
 			
 		</script>

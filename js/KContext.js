@@ -104,10 +104,8 @@ function RadialHitBox(xx, yy, rr){
 }
 RadialHitBox.prototype = new BasicHitBox();
 RadialHitBox.prototype.constructor = RadialHitBox
-RadialHitBox.prototype.hitTest = function(xx,yy){
-	return (	Math.sqrt( 	Math.pow( xx - this.x, 2)  +
-							Math.pow( yy - this.y, 2))  < this.radius);
-							
+RadialHitBox.prototype.hitTest = function(xx, yy){
+	return (	Math.sqrt( 	Math.pow( xx - this.x, 2) + Math.pow( yy - this.y, 2))  < this.radius);			
 }
 
 
@@ -709,100 +707,8 @@ KanvasBaseClass.prototype = {
 				this.__stageRolled = CURRENT;
 				this.mouseChange = false;
 		},
-	
-
-	
-	
-	
-	//====== Old HitBox
-	
-	/*__tryBoxUpdate: function(){
-		//Check if we already have a hitBox, or if we aren't dynamic and don't have an update flag
-		if(this.__hitBoxOverride || (!this.dynamic && !this.__boxNeedsUpdate))return false;
-		
-		//Begin Tracking With the Alt Context
-		Kanvas.__altContext.beginTrack()
-		
-		//Begin Tracking With the Alt Context
-		if(this.predraw)this.predraw(Kanvas.__altContext);
-		if(this.draw)this.draw(Kanvas.__altContext);
-		
-		this.temp = Kanvas.__altContext.closeTrack();
-		//Set the Hit Box
-		this.__setHitBox(this.temp.hitBox, true)
-		
-		//Reset Box Update Flag
-		this.__boxNeedsUpdate = false;
-	},
-	__setHitBox: function(hb, notUserGenerated){
-		//If not user generated, but there is a user generated one in place return false
-		if(notUserGenerated && this.__hitBoxOverride)return false
-		//If no hitbox given, set to a small radius?
-		if(!hb)hb = 2;
-		
-		//If User Generated, Put the Override in place
-		if(!notUserGenerated){
-			this.__hitBoxOverride = true;
-		}
-		
-		
-		//Set HitBox
-		this.__hitBox =  hb;
-		if(typeof(this.__hitBox)=='number')this.__hitBox = [0,0, this.__hitBox]
-		if(this.__hitBox.length == 3 && typeof(this.__hitBox[0])=='number'){
-			//Calculate Position for a circular HitBox
-			this.__insideX = this.__hitBox[2]-this.__hitBox[0];
-			this.__insideY = this.__hitBox[2]-this.__hitBox[1];
-			this.__width =  this.__hitBox[2]*2;
-			this.__height = this.__hitBox[2]*2;
-		}else if(this.__hitBox.length == 4 && typeof(this.__hitBox[0])=='number'){
-			//Calculate Position for a Rectangular HitBox
-			this.__insideX = -hb[0];
-			this.__insideY = -hb[1];
-			this.__width =  hb[2];
-			this.__height =  hb[3];
-		} 
-	},
-	
-	mouseHitTest: function(){
-		return this.hitTestLocal(this.mouseX, this.mouseY);
-	},
-	
-	hitTest: function(xx, yy){
-		//Set variables to local space for testing
-		if(typeof(xx)=='number'&& typeof(yy)=='number'){
-			return this.hitTestLocal.apply(this, this.globalToLocal(xx,yy));
-		}	
-	},
-	hitTestLocal:function(xx, yy){
-		//Return if we have no hit Box or bad arguments
-		if(this.__hitBox == null)return false;
-		if(!typeof(xx)=='number' || !typeof(yy)=='number')return false
-		
-		//If we have a radial Hit Box, test the radius against the distance to the point
-		if(this.__hitBox.length == 3 && typeof(this.__hitBox[0])=='number'){
-			return (Math.sqrt( 	Math.pow(xx - this.__hitBox[0], 2)	+
-								Math.pow(yy - this.__hitBox[1], 2)	) < this.__hitBox[2])
-		}
-		
-		//If we use a rectangular hitBox, Check if the point is in the rectangle
-		else if(this.__hitBox.length == 4 && typeof(this.__hitBox[0])=='number'){
-			return Kanvas.__pointInRect(xx, yy, 
-										this.__hitBox[0],
-										this.__hitBox[1],
-										this.__hitBox[0]+this.__hitBox[2],
-										this.__hitBox[1]+this.__hitBox[3])
-		}
-		
-	},
-	
-	__clearHitBox: function(){
-	}
-		this.__hitBoxOverride = false;
-		this.__boxNeedsUpdate = true;
-	},*/
-	
 }
+
 
 var Kanvas = new (function(){
 

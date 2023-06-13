@@ -35,7 +35,7 @@
 		<script>
 			
 			
-			var kanvas = Kanvas.create(document.getElementsByTagName('body')[0], {baseFPS:60});
+			var kanvas = Kanvas.makeCanvas(document.body);
 
 			var canvas = kanvas.canvas;
 			var mouseMoveObjects = [];
@@ -44,7 +44,7 @@
 			
 			
 			
-			var Car = Kanvas.class({
+			var Car = Kanvas.Class({
 				init: function(){
 					this.dynamic = false;
 					this.x = 100+ Math.random()* (canvas.width-200);
@@ -118,6 +118,8 @@
 						
 					}
 				}
+
+				return true;
 			}
 			kanvas.stage.addEventListener('mousedown');
 			kanvas.stage.addEventListener('mousemove');
